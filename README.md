@@ -1,8 +1,11 @@
 # 🐦 Zazu
 
 **Debugger visual de eventos GA4 / Firebase Analytics para apps Android.**
+<img width="1024" height="572" alt="image" src="https://github.com/user-attachments/assets/e090f761-ada6-4a2d-88f1-29a1375f94a8" />
 
-Zazu transforma o ruído do `adb logcat` em uma interface legível: cada evento disparado pelo app aparece na tela com nome, timestamp, parâmetros formatados, lista de produtos em cards e alertas automáticos de erro — em tempo real, enquanto você navega no celular.
+(Imagem gerada por I.A para representar o projeto)
+
+Zazu transforma o ruído do `adb logcat` em uma interface legível: cada evento disparado pelo app aparece na tela com nome, timestamp, parâmetros formatados, lista de produtos em cards e alertas automáticos de erro, em tempo real, enquanto você navega no celular.
 
 > Antes: você abre um `.txt` de milhares de linhas e caça `Bundle[{...}]` no meio do log do sistema.
 > Depois: você olha a tela e vê o evento chegando, já parseado e validado.
@@ -28,7 +31,7 @@ Zazu fica no meio: **zero configuração de rede, latência de milissegundos e o
 **Captura e streaming**
 - Habilita o modo verbose do Firebase Analytics no dispositivo e escuta as tags `FA` e `FA-SVC`.
 - Amplia o buffer do logcat para 16 MB para não perder eventos em sessões longas.
-- Lê o log em append contínuo — o evento aparece na tela no instante do disparo.
+- Lê o log em append contínuo, o evento aparece na tela no instante do disparo.
 
 **Parsing do Bundle do Android**
 - Converte a notação `Bundle[{name=view_item, params=Bundle[{...}]}]` em estrutura navegável.
@@ -37,11 +40,11 @@ Zazu fica no meio: **zero configuração de rede, latência de milissegundos e o
 **Recuperação de log truncado**
 - O logcat corta linhas em ~4 KB, o que quebra eventos de `purchase` com muitos itens.
 - Zazu conta os delimitadores abertos e fechados, descarta o fragmento incompleto, refecha a estrutura e continua exibindo o que foi capturado.
-- O evento recebe a etiqueta **⚠️ LOG CORTADO ( > 4KB )** e a seção de produtos é marcada como *(Parcial)* — você nunca confunde dado ausente com dado errado.
+- O evento recebe a etiqueta **⚠️ LOG CORTADO ( > 4KB )** e a seção de produtos é marcada como *(Parcial)*, você nunca confunde dado ausente com dado errado.
 
 **Validação automática**
-- **🐛 Bug detectado** — o SDK reportou erro de implementação. Detecta `ga_error`, `ga_error_length`, `ga_error_value` e os aliases curtos `_err`, `_el`, `_ev`. O parâmetro problemático é destacado em vermelho e um botão leva direto à documentação oficial de erros do Firebase.
-- **⚠️ Falta screen_name** — `screen_view` sem `ga_screen` / `_sn`. Um dos erros mais comuns e mais silenciosos em implementação de app.
+- **🐛 Bug detectado**, o SDK reportou erro de implementação. Detecta `ga_error`, `ga_error_length`, `ga_error_value` e os aliases curtos `_err`, `_el`, `_ev`. O parâmetro problemático é destacado em vermelho e um botão leva direto à documentação oficial de erros do Firebase.
+- **⚠️ Falta screen_name**, `screen_view` sem `ga_screen` / `_sn`. Um dos erros mais comuns e mais silenciosos em implementação de app.
 
 **Leitura de e-commerce**
 - O array `items` é renderizado como cards, um por produto, com `item_name` e `item_id` no cabeçalho e todos os parâmetros em grid.
@@ -51,7 +54,7 @@ Zazu fica no meio: **zero configuração de rede, latência de milissegundos e o
 
 ## 🏷️ Taxonomia visual
 
-Cada evento recebe uma cor e um ícone conforme a categoria — dá para varrer a tela e achar o que interessa sem ler nome por nome.
+Cada evento recebe uma cor e um ícone conforme a categoria, dá para varrer a tela e achar o que interessa sem ler nome por nome.
 
 | Categoria | Ícone | Eventos |
 | --- | --- | --- |
@@ -68,7 +71,7 @@ A correspondência é por substring: `view_item_promo_home`, por exemplo, cai em
 ## 🔧 Pré-requisitos
 
 - **Python 3.10 ou superior** (o projeto foi desenvolvido em 3.14).
-- **ADB / Android Platform Tools** — [download oficial](https://developer.android.com/tools/releases/platform-tools?hl=pt-br).
+- **ADB / Android Platform Tools**, [download oficial](https://developer.android.com/tools/releases/platform-tools?hl=pt-br).
 - **Dispositivo Android físico** com cabo de dados **ou** emulador do Android Studio.
 - O **app alvo instalado** no dispositivo e o **package name** dele.
 
@@ -90,7 +93,7 @@ Confirme que o dispositivo foi reconhecido:
 adb devices
 ```
 
-Se a lista vier vazia, nada em Zazu vai funcionar — resolva isso primeiro.
+Se a lista vier vazia, nada em Zazu vai funcionar, resolva isso primeiro.
 
 > Emulador do Android Studio já vem com depuração habilitada. Basta ele estar rodando.
 
@@ -120,7 +123,7 @@ python -m streamlit run app.py
 No navegador:
 
 1. Abra a **barra lateral** (ícone `»` no canto superior esquerdo).
-2. Preencha o **Package Name** do app alvo — ex.: `com.dominio.app`.
+2. Preencha o **Package Name** do app alvo, ex.: `com.dominio.app`.
 3. Clique em **🔌 Conectar e iniciar**.
 4. Navegue no celular. Os eventos aparecem na tela conforme são disparados.
 
@@ -183,14 +186,14 @@ flowchart LR
 
 - **Somente Android.** iOS não expõe os eventos do Firebase via `adb`.
 - **Um app por sessão de captura.** A propriedade `debug.firebase.analytics.app` aceita um único package.
-- **`log_android.txt` é recriado a cada início de captura** — é um arquivo de trabalho, não histórico. Exporte antes se precisar guardar.
+- **`log_android.txt` é recriado a cada início de captura**, é um arquivo de trabalho, não histórico. Exporte antes se precisar guardar.
 - **Eventos acima de ~4 KB chegam parciais** por limite do logcat, sinalizados na interface.
 - **O feed é ao vivo, sem filtro nem busca.** Para inspecionar um evento específico, use o botão Limpar antes de reproduzir a ação no app.
 - **Ferramenta local de desenvolvimento.** Ela lê o log do dispositivo conectado e não deve ser exposta em rede.
 
 ### Nota de comportamento
 
-Na categorização, `purchase` está listado no grupo de e-commerce e recebe o badge 🛍️ — a ramificação 💸 declarada em seguida no código nunca é alcançada. Não afeta o parsing nem a validação, só a cor da etiqueta.
+Na categorização, `purchase` está listado no grupo de e-commerce e recebe o badge 🛍️, a ramificação 💸 declarada em seguida no código nunca é alcançada. Não afeta o parsing nem a validação, só a cor da etiqueta.
 
 ---
 
@@ -210,7 +213,7 @@ Aplicação de arquivo único, sem dependências além do Streamlit. Todo o pars
 
 ## 📄 Licença
 
-MIT — veja [LICENSE](LICENSE).
+MIT, veja [LICENSE](LICENSE).
 
 ---
 
