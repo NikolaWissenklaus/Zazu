@@ -208,7 +208,10 @@ Zazu/
 ```
 
 Aplicação de arquivo único, sem dependências além do Streamlit. Todo o parsing é feito com a biblioteca padrão do Python.
-
+python -m venv venv
+venv\Scripts\activate
+pip install streamlit
+python -m streamlit run app.py
 ---
 
 ## 📄 Licença
