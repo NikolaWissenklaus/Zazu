@@ -119,6 +119,14 @@ Com o celular conectado e desbloqueado:
 ```bash
 python -m streamlit run app.py
 ```
+ou
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+pip install streamlit
+python -m streamlit run app.py
+```
 
 No navegador:
 
@@ -208,10 +216,6 @@ Zazu/
 ```
 
 Aplicação de arquivo único, sem dependências além do Streamlit. Todo o parsing é feito com a biblioteca padrão do Python.
-python -m venv venv
-venv\Scripts\activate
-pip install streamlit
-python -m streamlit run app.py
 ---
 
 ## 📄 Licença
